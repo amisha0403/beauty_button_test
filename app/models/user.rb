@@ -10,6 +10,6 @@ class User < ApplicationRecord
   has_many :answered_exams, :class_name => "exam", :through => :results, :foreign_key => "exam_id"
   has_one :course
 
-  validates :name, :enrolment_number, presence: true
-  validates :enrolment_number, uniqueness: true
+  validates :name, :enrollment_number, presence: true
+  validates :enrollment_number, uniqueness: true
 end
