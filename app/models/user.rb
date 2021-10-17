@@ -11,5 +11,5 @@ class User < ApplicationRecord
   has_one :course
 
   validates :name, :enrollment_number, presence: true
-  validates :enrollment_number, uniqueness: true
+  validates :enrollment_number, :phone_number uniqueness: true
 end
