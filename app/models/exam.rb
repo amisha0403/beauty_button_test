@@ -7,4 +7,7 @@ class Exam < ApplicationRecord
 	accepts_nested_attributes_for :results, allow_destroy: true
 	accepts_nested_attributes_for :exam_questions, allow_destroy: true
 
+	validates :name, :date_from, :date_to, :timing, presence: true
+	validates :name, uniqueness: true
+
 end
