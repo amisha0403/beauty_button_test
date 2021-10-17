@@ -51,6 +51,17 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
       end
+      column do
+        panel "Course" do
+          table_for Course.all.order(:id) do |p|
+            column "id" do |p| link_to "#{p.id}", "admin/users/#{p.id}" end
+            column :name
+          end
+          span do
+            link_to("All Courses", admin_courses_path)
+          end
+        end
+      end
     end
   
   end # content
