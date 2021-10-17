@@ -14,7 +14,7 @@ ActiveAdmin.register Answer, as: 'Answer' do
   form do |f|
     f.semantic_errors *f.object.errors.keys
     inputs 'Answer' do
-      f.input :question_id
+      f.input :question_id, :as => :select, :collection => Question.all.map{|q| [q.question, q.id]}
       f.input :answer
     end
     actions

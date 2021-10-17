@@ -21,8 +21,8 @@ ActiveAdmin.register Result, as: 'Result' do
   form do |f|
     f.semantic_errors *f.object.errors.keys
     inputs 'Result' do
-      f.input :student_id
-      f.input :exam_id
+      f.input :student_id, :as => :select, :collection => User.all.map{|u| [u.name, u.id]}
+      f.input :exam_id, :as => :select, :collection => Exam.all.map{|e| [e.name, e.id]}
       f.input :no_correct
       f.input :no_incorrect
       f.input :score
