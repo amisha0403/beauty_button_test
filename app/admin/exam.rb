@@ -9,12 +9,6 @@ ActiveAdmin.register Exam, as: 'Exam' do
 
   index do
     column :id
-    column 'Student' do |resource|
-      resource.student.name
-    end
-    column 'Exam' do |resource|
-      resource.exam.name
-    end
     column :name
     column :date_from
     column :date_to
