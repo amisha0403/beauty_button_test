@@ -3,6 +3,7 @@ module Api
 		class ResultsController < ApplicationController
 			before_action :authenticate_user!
 			before_action :find_result, only: [:show,:destroy,:update]
+      include ApplicationHelper
 
       def index
          results = Result.all
@@ -18,7 +19,7 @@ module Api
         if result.save
           render json:  {result: result, status: :success, message: "result created successfully"}
         else
-          render json:  {result: [], message: result.formatted_error, status: :unprocessable_entity}
+          render json:  {result: [], message: format_activerecord_errors(result.errors), status: :unprocessable_entity}
         end
       end
 
@@ -32,9 +33,9 @@ module Api
 
       def destroy
         if @result && @result.destroy
-          render json: {status: :success, message: "result delete successfully"}
+          render json: {status: :success, message: "delete result successfully"}
         else
-          render json: {status: :failure, message: "result info delete failed"}
+          render json: {status: :failure, message: "result delete failed"}
         end
       end
 

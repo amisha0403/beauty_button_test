@@ -3,6 +3,7 @@ module Api
 		class CoursesController < ApplicationController
 			before_action :authenticate_user!
 			before_action :find_course, only: [:show,:destroy,:update]
+      include ApplicationHelper
 
 			def index
          courses = Course.all
@@ -18,7 +19,7 @@ module Api
         if course.save
           render json:  {course: course, status: :success, message: "course created successfully"}
         else
-          render json:  {course: [], message: course.formatted_error, status: :unprocessable_entity}
+          render json:  {course: [], message: format_activerecord_errors(course.errors), status: :unprocessable_entity}
         end
       end
 
@@ -34,7 +35,7 @@ module Api
         if @course && @course.destroy
           render json: {status: :success, message: "course delete successfully"}
         else
-          render json: {status: :failure, message: "course info delete failed"}
+          render json: {status: :failure, message: "course delete failed"}
         end
       end
 
@@ -55,7 +56,6 @@ module Api
       def course_params
         params.require(:course).permit(:name, :student_id)
       end
-
 		end
   end
 end

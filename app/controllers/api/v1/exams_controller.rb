@@ -3,6 +3,7 @@ module Api
 		class ExamsController < ApplicationController
 			before_action :authenticate_user!
 			before_action :find_exam, only: [:show,:destroy,:update]
+      include ApplicationHelper
 
       def index
          exams = Exam.all
@@ -15,11 +16,10 @@ module Api
       
       def create
         exam = Exam.new(exam_params)
-        
         if exam.save
           render json:  {exam: exam, status: :success, message: "exam created successfully"}
         else
-          render json:  {exam: [], message: exam.formatted_error, status: :unprocessable_entity}
+          render json:  {exam: [], message: format_activerecord_errors(exam.errors), status: :unprocessable_entity}
         end
       end
 
@@ -35,7 +35,7 @@ module Api
         if @exam && @exam.destroy
           render json: {status: :success, message: "exam delete successfully"}
         else
-          render json: {status: :failure, message: "exam info delete failed"}
+          render json: {status: :failure, message: "exam delete failed"}
         end
       end
 

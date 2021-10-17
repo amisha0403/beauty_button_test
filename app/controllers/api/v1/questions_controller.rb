@@ -3,6 +3,7 @@ module Api
 		class QuestionsController < ApplicationController
 			before_action :authenticate_user!
 			before_action :find_question, only: [:show,:destroy,:update]
+			include ApplicationHelper
 
 			def index
          questions = Question.all
@@ -18,7 +19,7 @@ module Api
         if question.save
           render json:  {question: question, status: :success, message: "question created successfully"}
         else
-          render json:  {question: [], message: question.formatted_error, status: :unprocessable_entity}
+          render json:  {question: [], message: format_activerecord_errors(question.errors), status: :unprocessable_entity}
         end
       end
 
@@ -34,7 +35,7 @@ module Api
         if @question && @question.destroy
           render json: {status: :success, message: "question delete successfully"}
         else
-          render json: {status: :failure, message: "question info delete failed"}
+          render json: {status: :failure, message: "question delete failed"}
         end
       end
 
