@@ -1,6 +1,6 @@
 ActiveAdmin.register Course, as: 'Course' do
   menu label: 'Course'
-  permit_params :name, :student_id
+  permit_params :name
   config.filters = false
   
   index do
